@@ -38,13 +38,13 @@ public class SearchActivity extends Activity {
 		imageAdapter = new ImageResultArrayAdapter(this, imageResults);
 		gvResults.setAdapter(imageAdapter);
 		gvResults.setOnItemClickListener(new OnItemClickListener() {
-		   	@Override
-		   	public void onItemClick(AdapterView<?> adapter, View parent, int position, long rowId) {
-		      Intent i = new Intent(getApplicationContext(), ImageDisplayActivity.class);
-		      ImageResult imageResult = imageResults.get(position);
-		      i.putExtra("result", imageResult);
-		      startActivity(i);
-		   	}
+			@Override
+			public void onItemClick(AdapterView<?> adapter, View parent, int position, long rowId) {
+				Intent i = new Intent(getApplicationContext(), ImageDisplayActivity.class);
+				ImageResult imageResult = imageResults.get(position);
+				i.putExtra("result", imageResult);
+				startActivity(i);
+			}
 		});
 	}
 
@@ -63,29 +63,25 @@ public class SearchActivity extends Activity {
 
 	public void onImageSearch(View v) {
 		String query = etQuery.getText().toString();
-		Toast.makeText(this, "Searching for " + query, Toast.LENGTH_SHORT)
-				.show();
+		Toast.makeText(this, "Searching for " + query, Toast.LENGTH_SHORT).show();
 		AsyncHttpClient client = new AsyncHttpClient();
 		// https://ajax.googleapis.com/ajax/services/search/images?q=Android&v=1.0
-		client.get(
-				"https://ajax.googleapis.com/ajax/services/search/images?rsz=8&"
-						+ "start=" + 0 + "&v=1.0&q=" + Uri.encode(query),
-				new JsonHttpResponseHandler() {
-					@Override
-					public void onSuccess(JSONObject response) {
-						JSONArray imageJsonResults = null;
-						try {
-							imageJsonResults = response.getJSONObject(
-									"responseData").getJSONArray("results");
-							imageResults.clear();
-							imageAdapter.addAll(ImageResult
-									.fromJSONArray(imageJsonResults));
-							Log.d("DEBUG", imageResults.toString());
-						} catch (JSONException e) {
-							e.printStackTrace();
-						}
-					}
-				});
+		client.get("https://ajax.googleapis.com/ajax/services/search/images?rsz=8&" + "start=" + 0
+				+ "&v=1.0&q=" + Uri.encode(query), new JsonHttpResponseHandler() {
+			@Override
+			public void onSuccess(JSONObject response) {
+				JSONArray imageJsonResults = null;
+				try {
+					imageJsonResults = response.getJSONObject("responseData").getJSONArray(
+							"results");
+					imageResults.clear();
+					imageAdapter.addAll(ImageResult.fromJSONArray(imageJsonResults));
+					Log.d("DEBUG", imageResults.toString());
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+			}
+		});
 	}
 
 }
