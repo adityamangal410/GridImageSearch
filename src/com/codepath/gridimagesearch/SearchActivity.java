@@ -1,6 +1,8 @@
 package com.codepath.gridimagesearch;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -28,6 +30,8 @@ public class SearchActivity extends Activity {
 	EditText etQuery;
 	GridView gvResults;
 	Button btnSearch;
+	Button btnLoadMore;
+	
 	ArrayList<ImageResult> imageResults = new ArrayList<ImageResult>();
 	ImageResultArrayAdapter imageAdapter;
 	final static int GET_RESULT_TEXT = 0;
@@ -35,6 +39,8 @@ public class SearchActivity extends Activity {
 	String ImageType="";
 	String ImageSize="";
 	String Color="";
+	int Offset = 0;
+	boolean SearchClicked=false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +71,8 @@ public class SearchActivity extends Activity {
 		etQuery = (EditText) findViewById(R.id.etQuery);
 		gvResults = (GridView) findViewById(R.id.gvResults);
 		btnSearch = (Button) findViewById(R.id.btnSearch);
+		btnLoadMore = (Button)findViewById(R.id.btnLoadMore);
+		btnLoadMore.setVisibility(View.INVISIBLE);
 	}
 
 	@Override
@@ -94,27 +102,41 @@ public class SearchActivity extends Activity {
 	  }
 	
 	public void onImageSearch(View v) {
+		if(SearchClicked){
+			Offset=0;
+		}
 		String query = etQuery.getText().toString();
 		Toast.makeText(this, "Searching for " + query, Toast.LENGTH_SHORT).show();
 		AsyncHttpClient client = new AsyncHttpClient();
 		// https://ajax.googleapis.com/ajax/services/search/images?q=Android&v=1.0
-		String url = "https://ajax.googleapis.com/ajax/services/search/images?rsz=8&start=0&v=1.0";
+		String url = "https://ajax.googleapis.com/ajax/services/search/images?rsz=8&start="+Offset+"&v=1.0";
 		
 		if(!Site.isEmpty()){
-			url = url+"&as_sitesearch="+Uri.encode(Site);
+			if(Site.toLowerCase().contains(".com")){
+				url = url+"&as_sitesearch="+Uri.encode(Site);
+			}
 		}
 		if(!ImageSize.isEmpty()){
-			url = url+"&imgsz="+Uri.encode(ImageSize);
+			List<String> sizeList = Arrays.asList("icon", "small", "medium", "large", "xlarge", "xxlarge", "huge");
+			if (sizeList.contains(ImageSize)){
+				url = url+"&imgsz="+Uri.encode(ImageSize);
+			}
 		}
 		if(!ImageType.isEmpty()){
-			url = url+"&imgtype="+Uri.encode(ImageType);
+			List<String> typeList = Arrays.asList("face", "photo", "clipart", "lineart");
+			if (typeList.contains(ImageType)){
+				url = url+"&imgtype="+Uri.encode(ImageType);
+			}
 		}
 		if(!Color.isEmpty()){
-			url = url+"&imgcolor="+Uri.encode(Color);
+			List<String> colorList = Arrays.asList("black", "blue", "brown", "gray", "green", "orange", "pink", "purple", "red", "teal", "white", "yellow");
+			if (colorList.contains(Color)){
+				url = url+"&imgcolor="+Uri.encode(Color);
+			}
 		}
 		
 		url = url + "&q="+Uri.encode(query);
-		Toast.makeText(this, url, Toast.LENGTH_LONG).show();
+		Log.d("DEBUG", url);
 		
 		client.get(url, new JsonHttpResponseHandler() {
 			@Override
@@ -131,6 +153,15 @@ public class SearchActivity extends Activity {
 				}
 			}
 		});
+		
+		btnLoadMore.setVisibility(View.VISIBLE);
+		SearchClicked = true;
+	}
+	
+	public void onLoadMore(View v){
+		Offset += 8;
+		SearchClicked=false;
+		onImageSearch(v);
 	}
 
 }

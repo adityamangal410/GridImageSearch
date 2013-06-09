@@ -18,5 +18,6 @@
     <string name="color_filter_hint">Enter Color Filter</string>
     <string name="site_filter_hint">Enter Site Filter</string>
     <string name="advanced_button_go">Go</string>
+    <string name="button_load_more">Load More</string>
 
 </resources>

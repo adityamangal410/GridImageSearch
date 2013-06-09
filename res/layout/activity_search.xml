@@ -38,4 +38,13 @@
         android:numColumns="3" >
     </GridView>
 
+    <Button
+        android:id="@+id/btnLoadMore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/gvResults"
+        android:layout_centerHorizontal="true"
+        android:onClick="onLoadMore"
+        android:text="@string/button_load_more" />
+
 </RelativeLayout>
