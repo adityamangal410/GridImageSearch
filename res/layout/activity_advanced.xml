@@ -1,0 +1,121 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".Advanced" >
+
+    <TextView
+        android:id="@+id/tvAdvancedHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="14dp"
+        android:layout_marginTop="24dp"
+        android:text="@string/title_activity_advanced"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/tvImageSize"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/tvAdvancedHeader"
+        android:layout_below="@+id/tvAdvancedHeader"
+        android:layout_marginTop="44dp"
+        android:text="@string/image_size_label"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:id="@+id/tvImageType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/tvColorFilter"
+        android:layout_centerVertical="true"
+        android:text="@string/image_type_label"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:id="@+id/tvColorFilter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/tvImageSize"
+        android:layout_below="@+id/tvImageSize"
+        android:layout_marginTop="37dp"
+        android:text="@string/color_filter_label"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:id="@+id/tvSiteFilter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/tvImageType"
+        android:layout_below="@+id/tvImageType"
+        android:layout_marginTop="43dp"
+        android:text="@string/site_filter_label"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <EditText
+        android:id="@+id/etSiteFilter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/tvSiteFilter"
+        android:layout_alignBottom="@+id/tvSiteFilter"
+        android:layout_alignLeft="@+id/actvImageType"
+        android:layout_alignRight="@+id/actvImageType"
+        android:layout_toRightOf="@+id/tvSiteFilter"
+        android:ems="10"
+        android:hint="@string/site_filter_hint" >
+
+        <requestFocus />
+    </EditText>
+
+    <AutoCompleteTextView
+        android:id="@+id/actvImageSize"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/tvImageSize"
+        android:layout_toRightOf="@+id/tvImageSize"
+        android:layout_alignBottom="@+id/tvImageSize"
+        android:layout_alignLeft="@+id/actvImageType"
+        android:layout_alignRight="@+id/tvAdvancedHeader"
+        android:ems="10"
+        android:hint="@string/image_size_hint" />
+
+    <AutoCompleteTextView
+        android:id="@+id/actvColorFilter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/tvColorFilter"
+        android:layout_alignBottom="@+id/tvColorFilter"
+        android:layout_toRightOf="@+id/tvColorFilter"
+        android:layout_alignLeft="@+id/actvImageType"
+        android:layout_alignRight="@+id/tvAdvancedHeader"
+        android:ems="10"
+        android:hint="@string/color_filter_hint" />
+
+    <AutoCompleteTextView
+        android:id="@+id/actvImageType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/tvImageType"
+        android:layout_toRightOf="@+id/tvImageType"
+        android:layout_alignBottom="@+id/tvImageType"
+        android:layout_alignRight="@+id/tvAdvancedHeader"
+        android:ems="10"
+        android:hint="@string/image_type_hint" />
+
+    <Button
+        android:id="@+id/btnAdvancedGo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/etSiteFilter"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="47dp"
+        android:onClick="onAdvancedSearch"
+        android:text="@string/advanced_button_go" />
+
+</RelativeLayout>

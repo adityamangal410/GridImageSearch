@@ -6,5 +6,17 @@
     <string name="hello_world">Hello world!</string>
     <string name="query_hint">Enter Search Term</string>
     <string name="title_activity_image_display">ImageDisplayActivity</string>
-	<string name="search_label">Search</string>
+    <string name="search_label">Search</string>
+    <string name="advanced_title">Advanced</string>
+    <string name="title_activity_advanced">Advanced Search Options</string>
+    <string name="image_size_label">Image Size</string>
+    <string name="color_filter_label">Color Filter</string>
+    <string name="image_type_label">Image Type</string>
+    <string name="site_filter_label">Site Filter</string>
+    <string name="image_size_hint">Enter Image Size</string>
+    <string name="image_type_hint">Enter Image Type</string>
+    <string name="color_filter_hint">Enter Color Filter</string>
+    <string name="site_filter_hint">Enter Site Filter</string>
+    <string name="advanced_button_go">Go</string>
+
 </resources>

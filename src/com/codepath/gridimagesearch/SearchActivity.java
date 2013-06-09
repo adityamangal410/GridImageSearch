@@ -12,6 +12,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -29,6 +30,11 @@ public class SearchActivity extends Activity {
 	Button btnSearch;
 	ArrayList<ImageResult> imageResults = new ArrayList<ImageResult>();
 	ImageResultArrayAdapter imageAdapter;
+	final static int GET_RESULT_TEXT = 0;
+	String Site="";
+	String ImageType="";
+	String ImageSize="";
+	String Color="";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -61,13 +67,56 @@ public class SearchActivity extends Activity {
 		btnSearch = (Button) findViewById(R.id.btnSearch);
 	}
 
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+	  switch (item.getItemId()) {
+	  case R.id.advanced:
+		// In Activity
+		  startActivityForResult(
+		          new Intent(this, Advanced.class), GET_RESULT_TEXT);
+	    break;
+	  default:
+	    break;
+	  }
+	  return true;
+	}
+	
+	// Handle the result once the activity returns a result, display contact
+	  protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+	    if (requestCode == 0) {
+	      if (resultCode == RESULT_OK) {
+	    	  Site = data.getStringExtra("site");
+	    	  ImageSize = data.getStringExtra("size");
+	    	  ImageType = data.getStringExtra("type");
+	    	  Color = data.getStringExtra("color");
+	      }
+	    }
+	  }
+	
 	public void onImageSearch(View v) {
 		String query = etQuery.getText().toString();
 		Toast.makeText(this, "Searching for " + query, Toast.LENGTH_SHORT).show();
 		AsyncHttpClient client = new AsyncHttpClient();
 		// https://ajax.googleapis.com/ajax/services/search/images?q=Android&v=1.0
-		client.get("https://ajax.googleapis.com/ajax/services/search/images?rsz=8&" + "start=" + 0
-				+ "&v=1.0&q=" + Uri.encode(query), new JsonHttpResponseHandler() {
+		String url = "https://ajax.googleapis.com/ajax/services/search/images?rsz=8&start=0&v=1.0";
+		
+		if(!Site.isEmpty()){
+			url = url+"&as_sitesearch="+Uri.encode(Site);
+		}
+		if(!ImageSize.isEmpty()){
+			url = url+"&imgsz="+Uri.encode(ImageSize);
+		}
+		if(!ImageType.isEmpty()){
+			url = url+"&imgtype="+Uri.encode(ImageType);
+		}
+		if(!Color.isEmpty()){
+			url = url+"&imgcolor="+Uri.encode(Color);
+		}
+		
+		url = url + "&q="+Uri.encode(query);
+		Toast.makeText(this, url, Toast.LENGTH_LONG).show();
+		
+		client.get(url, new JsonHttpResponseHandler() {
 			@Override
 			public void onSuccess(JSONObject response) {
 				JSONArray imageJsonResults = null;
