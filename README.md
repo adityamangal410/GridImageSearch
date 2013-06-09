@@ -1,4 +1,4 @@
-android_google_image_searcher
-=============================
+GridImageSearch
+===============
 
-Android Google Image Searcher Demo
+Android Assignment Google Image Search
